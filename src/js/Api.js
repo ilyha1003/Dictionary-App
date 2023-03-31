@@ -16,18 +16,21 @@ const debounce = (func, delay) => {
 const getApiData = async () => {
     list.innerHTML = ''
     const inputValue = input.value;
-    const data = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`);
+    const data = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue.trim()}`);
     const json = await data.json();
 
     if(inputValue) {
         if(json.title) {
-            console.log(json.title); 
+            console.log(json.title, json.message); 
             const errorElement = document.createElement('li');
-            errorElement.innerText = json.title;
-            list.append(errorElement)       
+            const spanTitle = document.createElement('span');
+            const spanMessage = document.createElement('span');
+            spanTitle.innerText = json.title;
+            spanMessage.innerText = json.message;
+            errorElement.append(spanTitle, spanMessage);
+            list.append(errorElement);       
         }
         console.log(json);
-        return json;    
     } else {
         list.innerHTML = '';
     }
