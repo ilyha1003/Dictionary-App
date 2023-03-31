@@ -8,3 +8,18 @@
 .centered {
     margin: 0 auto;
 }
+
+.hidden {
+    display: none;
+}
+
+.error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 600px;
+}
+
+.volume {
+    font-size: 20px;
+}

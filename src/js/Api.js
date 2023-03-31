@@ -1,3 +1,5 @@
+import createErrorField from "./error";
+
 const list = document.querySelector('.word__list');
 const input = document.querySelector('.input');
 const main = document.querySelector('.main');
@@ -14,25 +16,23 @@ const debounce = (func, delay) => {
 }
 
 const getApiData = async () => {
-    list.innerHTML = ''
-    const inputValue = input.value;
-    const data = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue.trim()}`);
-    const json = await data.json();
+    list.innerHTML = '';
+    const inputValue = input.value.trim();
+    try {
+        if(inputValue) {
+            const data = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${inputValue}`);
+            const json = await data.json();
+            
+            if(json.title) {
+                list.append(createErrorField(json.title, json.message));       
+            }
 
-    if(inputValue) {
-        if(json.title) {
-            console.log(json.title, json.message); 
-            const errorElement = document.createElement('li');
-            const spanTitle = document.createElement('span');
-            const spanMessage = document.createElement('span');
-            spanTitle.innerText = json.title;
-            spanMessage.innerText = json.message;
-            errorElement.append(spanTitle, spanMessage);
-            list.append(errorElement);       
+            console.log(json);
+        } else {
+            list.innerHTML = '';
         }
-        console.log(json);
-    } else {
-        list.innerHTML = '';
+    } catch(err) {        
+        console.log(err);
     }
 }
 
