@@ -1,4 +1,5 @@
 import createErrorField from "./error";
+import fillListElement from "./list";
 
 const list = document.querySelector('.word__list');
 const input = document.querySelector('.input');
@@ -8,7 +9,7 @@ const debounce = (func, delay) => {
     let timeout;
     return function () {
         const funcCall = () => {
-            func.apply(this, arguments)
+            func.apply(this, arguments);
         };
         clearTimeout(timeout);
         timeout = setTimeout(funcCall, delay);       
@@ -24,10 +25,11 @@ const getApiData = async () => {
             const json = await data.json();
             
             if(json.title) {
-                list.append(createErrorField(json.title, json.message));       
-            }
+                list.append(createErrorField(json.title, json.message));
+            };
 
-            console.log(json);
+            fillListElement(json);
+            return json;
         } else {
             list.innerHTML = '';
         }

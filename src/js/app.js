@@ -1,5 +1,6 @@
 import getData from "./Api";
 import { loaderHTML } from "./constants";
+import fillListElement from "./list";
 import createListElement from "./list";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -10,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     input.oninput = () => {
         wordList.innerHTML = loaderHTML;
         getData();
-        
+        // fillListElement(getData());
     }
-    
 })

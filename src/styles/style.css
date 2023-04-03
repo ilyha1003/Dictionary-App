@@ -23,3 +23,23 @@
 .volume {
     font-size: 20px;
 }
+
+.word-section {
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: capitalize;
+    padding-bottom: 20px;
+}
+
+.meaning-section {
+    padding: 0 10px;
+}
+
+.speechpart-field {
+    font-weight: 500;
+}
+
+.defenitions-field {
+    display: flex;
+    flex-direction: column;
+}
