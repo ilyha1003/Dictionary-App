@@ -11,6 +11,5 @@ document.addEventListener('DOMContentLoaded', () => {
     input.oninput = () => {
         wordList.innerHTML = loaderHTML;
         getData();
-        // fillListElement(getData());
     }
 })

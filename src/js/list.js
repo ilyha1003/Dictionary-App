@@ -1,35 +1,4 @@
-import getData from "./Api"
-
 const wordList = document.querySelector('.word__list');
-
-const createListElement = () => {
-    const listElement = document.createElement('li');
-    listElement.classList.add('list__element');
-
-    const wordSection = document.createElement('div');
-    wordSection.classList.add('word-section');
-
-    const meaningSection = document.createElement('div');
-    meaningSection.classList.add('meaning-section');
-    const defenitionField = document.createElement('span');
-    defenitionField.classList.add('defenition-field');
-    const speechPartField = document.createElement('span');
-    speechPartField.classList.add('speechpart-field');
-
-    const phoneticSection = document.createElement('div');
-    phoneticSection.classList.add('phonetic-section');
-    const transcriptionField = document.createElement('span');
-    transcriptionField.classList.add('transcription-field');
-    const audioField = document.createElement('span');
-    audioField.classList.add('audio-field');
-    audioField.innerHTML = `<i class="fas fa-volume-up volume"></i>`
-
-    meaningSection.append(defenitionField, speechPartField);
-    phoneticSection.append(transcriptionField, audioField);
-    listElement.append(wordSection, meaningSection, phoneticSection);
-
-    return listElement;
-}
 
 const fillListElement = (apiData) => {
     apiData.forEach((el) => {
@@ -37,32 +6,99 @@ const fillListElement = (apiData) => {
         listElement.classList.add('list__element');
         listElement.classList.add('list-group-item');
 
-        const wordSection = document.createElement('div');
+        const wordSection = document.createElement('section');
         wordSection.classList.add('word-section');
         wordSection.innerText = el.word;
 
-        const meaningsSection = document.createElement('div');
+        const meaningsSection = document.createElement('section');
         meaningsSection.classList.add('meaning-section');
-        const definitionsField = document.createElement('div');
-        definitionsField.classList.add('defenitions-field');
-        const speechPartField = document.createElement('span');
-        speechPartField.classList.add('speechpart-field');
-        speechPartField.innerText = 'Part of speech: '
-        meaningsSection.append(speechPartField, definitionsField);
+
+        const phoneticsSection = document.createElement('section');
+        phoneticsSection.classList.add('phonetics-section');
+
 
         el.meanings.forEach((el) => {
-            const speechPartSpan = document.createElement('span');
-            speechPartSpan.innerText = el.partOfSpeech;
-            speechPartField.append(speechPartSpan);
-            el.definitions.forEach((el) => {
-                const definition = document.createElement('span');
-                definition.innerText = el.definition;
-                definitionsField.append(definition);
-            })
-        })
-        
+            const meaningsWrapper = document.createElement('div');
+            meaningsWrapper.classList.add('meanings-wrapper');
 
-        listElement.append(wordSection, meaningsSection);
+            const partOfSpeechWrapper = document.createElement('div');
+            partOfSpeechWrapper.classList.add('speechpart-wrapper');
+
+            const partOfSpeech = el.partOfSpeech;
+
+            const definitionsWrapper = document.createElement('div');
+            definitionsWrapper.classList.add('definitions-wrapper');
+            definitionsWrapper.innerText = 'Definitions:';
+
+            const showDefinitionsButton = document.createElement('i');
+            showDefinitionsButton.value = 0;
+            showDefinitionsButton.classList.add('show-button');
+            showDefinitionsButton.classList.add('fa-solid');
+            showDefinitionsButton.classList.add('fa-plus');
+            definitionsWrapper.append(showDefinitionsButton);
+            
+            const wordDefinitions = document.createElement('div');
+            wordDefinitions.classList.add('definitions');
+            wordDefinitions.classList.add('hidden');
+            
+            el.definitions.forEach((el) => {
+                const definitionSpan = document.createElement('span');
+                definitionSpan.classList.add('definition');
+                const definition = el.definition;
+                definitionSpan.innerText = definition;
+                wordDefinitions.append(definitionSpan);
+            });
+
+            definitionsWrapper.append(wordDefinitions);
+
+            partOfSpeechWrapper.innerText = 'Part of speech: ' + partOfSpeech;
+
+            meaningsWrapper.append(partOfSpeechWrapper, definitionsWrapper);
+            meaningsSection.append(meaningsWrapper);
+
+            showDefinitionsButton.addEventListener('click', () => {
+                wordDefinitions.classList.toggle('hidden');
+                if(showDefinitionsButton.value === 0) {
+                    showDefinitionsButton.classList.remove('fa-plus');
+                    showDefinitionsButton.classList.add('fa-minus');
+                    showDefinitionsButton.value = 1;
+                    
+                } else {
+                    showDefinitionsButton.classList.remove('fa-minus');
+                    showDefinitionsButton.classList.add('fa-plus');
+                    showDefinitionsButton.value = 0;
+                }
+            });
+        });
+
+        el.phonetics.forEach((el) => {
+            if(el.text && el.audio) {
+                const phoneticField = document.createElement('div');
+                phoneticField.classList.add('phonetic-field');
+                phoneticField.innerText = 'Transcription: '
+                const transcriptionField = document.createElement('div');
+                transcriptionField.classList.add('transcription-field');
+                transcriptionField.innerText = el.text;
+                const audioField = document.createElement('div');
+                
+                const audio = document.createElement('i');
+                audio.classList.add('audio');
+                audio.classList.add('fa-solid');
+                audio.classList.add('fa-volume-high');
+                audioField.append(audio);
+                audio.addEventListener('click', () => {
+                    const audioFile = new Audio();
+                    audioFile.src = el.audio;
+                    audioFile.play();
+                });
+
+                phoneticField.append(transcriptionField, audioField);
+                phoneticsSection.append(phoneticField);
+            }
+            
+        });
+        
+        listElement.append(wordSection, meaningsSection, phoneticsSection);
         wordList.append(listElement);
     });
     console.log(apiData);

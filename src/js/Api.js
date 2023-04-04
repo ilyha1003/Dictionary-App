@@ -3,7 +3,6 @@ import fillListElement from "./list";
 
 const list = document.querySelector('.word__list');
 const input = document.querySelector('.input');
-const main = document.querySelector('.main');
 
 const debounce = (func, delay) => {
     let timeout;
