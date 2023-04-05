@@ -13,6 +13,7 @@ const createErrorField = (title, message, ) => {
     errorMessage.innerText = message;
 
     errorField.append(errorTitle, errorMessage);
+    
     return errorField;
 }
 

@@ -62,7 +62,6 @@ const fillListElement = (apiData) => {
                     showDefinitionsButton.classList.remove('fa-plus');
                     showDefinitionsButton.classList.add('fa-minus');
                     showDefinitionsButton.value = 1;
-                    
                 } else {
                     showDefinitionsButton.classList.remove('fa-minus');
                     showDefinitionsButton.classList.add('fa-plus');
@@ -101,7 +100,6 @@ const fillListElement = (apiData) => {
         listElement.append(wordSection, meaningsSection, phoneticsSection);
         wordList.append(listElement);
     });
-    console.log(apiData);
 }
 
 export default fillListElement;

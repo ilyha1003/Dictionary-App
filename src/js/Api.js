@@ -13,7 +13,7 @@ const debounce = (func, delay) => {
         clearTimeout(timeout);
         timeout = setTimeout(funcCall, delay);       
     };
-}
+};
 
 const getApiData = async () => {
     list.innerHTML = '';
@@ -32,10 +32,10 @@ const getApiData = async () => {
         } else {
             list.innerHTML = '';
         }
-    } catch(err) {        
+    } catch(err) { 
         console.log(err);
     }
-}
+};
 
 const getData = debounce(getApiData, 500);
 

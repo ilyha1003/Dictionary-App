@@ -1,7 +1,5 @@
 import getData from "./Api";
 import { loaderHTML } from "./constants";
-import fillListElement from "./list";
-import createListElement from "./list";
 
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.querySelector('.input');

@@ -1,3 +1,20 @@
+body {
+    background: linear-gradient( rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6) ), url('../assets/torn-dictionary-paper-pages-wa88kia6o73kophn.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment:fixed;
+}
+
+.header {
+    font-size: calc(1.5rem + 1.5vw);
+}
+
+.main {
+    height: 100vh;
+    position: relative;
+    z-index: 2;
+}
+
 .input {
     max-width: 300px;
 }
@@ -94,7 +111,6 @@
 .transcription-field {
     font-weight: normal;
 }
-
 
 .hidden {
     display: none;
